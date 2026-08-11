@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>
+  // Mark that JS is running BEFORE first paint. The scroll-reveal styles are scoped to .js,
+  // so with JS disabled or blocked every .rise element stays fully visible instead of blank.
+  document.documentElement.className += ' js';
   (function(){ try{ var t=localStorage.getItem('pfai-theme'); if(t){document.documentElement.setAttribute('data-theme',t);} }catch(e){} })();
 </script>
 
@@ -12,6 +15,14 @@
 <meta property="og:title" content="Palmsfield AI — AI Training &amp; Workflow Automation | San Antonio, TX">
 <meta property="og:description" content="On-site AI training and workflow automation for San Antonio-area service businesses.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://www.palmsfieldai.com/">
+<meta property="og:image" content="https://www.palmsfieldai.com/images/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Palmsfield AI working on-site with a San Antonio team">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.palmsfieldai.com/images/og-cover.jpg">
+<link rel="canonical" href="https://www.palmsfieldai.com/">
 <meta name="theme-color" content="#0F2C4F">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7.5' fill='%230F2C4F'/%3E%3Cg stroke='%23E8B45C' stroke-width='2' stroke-linecap='round' fill='none'%3E%3Cpath d='M16 26V11'/%3E%3Cpath d='M16 13.5C13 10.4 9.8 9.9 7.2 11.6'/%3E%3Cpath d='M16 13.5C19 10.4 22.2 9.9 24.8 11.6'/%3E%3Cpath d='M16 18.4C13.4 16 10.7 15.6 8.6 17'/%3E%3Cpath d='M16 18.4C18.6 16 21.3 15.6 23.4 17'/%3E%3C/g%3E%3Ccircle cx='16' cy='9.4' r='1.7' fill='%23E8B45C'/%3E%3C/svg%3E">
 
@@ -24,6 +35,9 @@
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
   "name": "Palmsfield AI",
+  "url": "https://www.palmsfieldai.com/",
+  "logo": "https://www.palmsfieldai.com/images/logo.svg",
+  "image": "https://www.palmsfieldai.com/images/og-cover.jpg",
   "description": "AI training and workflow automation for service businesses in San Antonio and the surrounding area.",
   "areaServed": [
     {"@type":"City","name":"San Antonio"},
@@ -51,6 +65,7 @@
     --navy-3:#3D79B8;
     --navy-mark:#0F2C4F;
     --amber:#B0761C;
+    --amber-ink:#90601A;   /* amber that meets 4.5:1 on light backgrounds for small text */
     --amber-bright:#E8B45C;
     --amber-wash:rgba(184,122,30,0.13);
     --panel:#0F2C4F;
@@ -76,6 +91,7 @@
     --navy-3:#3D79B8;
     --navy-mark:#1C4E86;
     --amber:#E8B45C;
+    --amber-ink:#E8B45C;
     --amber-wash:rgba(232,180,92,0.14);
     --panel:#0C1A2C;
     --panel-2:#08131F;
@@ -114,7 +130,7 @@
   /* annotation label — blueprint motif */
   .anno{
     font-family:'IBM Plex Mono',monospace; font-size:.72rem; font-weight:500;
-    letter-spacing:.14em; text-transform:uppercase; color:var(--amber);
+    letter-spacing:.14em; text-transform:uppercase; color:var(--amber-ink);
     display:flex; align-items:center; gap:10px; margin-bottom:14px;
   }
   .anno::before{content:""; width:26px; height:1px; background:currentColor; flex:none;}
@@ -149,10 +165,10 @@
   .bar-in{max-width:var(--max); margin:0 auto; padding:14px 30px; display:flex; align-items:center; gap:18px;}
   .brand{font-family:'Archivo',sans-serif; font-weight:700; font-size:1.28rem; letter-spacing:-.02em; display:flex; align-items:center; gap:9px;}
   .mark{width:27px; height:27px; flex:none; display:block;}
-  .brand span b{font-weight:700; color:var(--amber); font-style:normal;}
+  .brand span b{font-weight:700; color:var(--amber-ink); font-style:normal;}
   .ft-b span b{font-weight:700; color:var(--amber-bright);}
   .ft-b .mark rect{fill:#1C4E86;}
-  .nav{display:flex; gap:24px; list-style:none; margin:0 0 0 auto; padding:0; font-size:.94rem; color:var(--ink-2);}
+  .nav{display:flex; gap:19px; list-style:none; margin:0 0 0 auto; padding:0; font-size:.94rem; color:var(--ink-2); white-space:nowrap;}
   .nav a:hover{color:var(--ink);}
   .bar-act{display:flex; align-items:center; gap:9px; margin-left:18px;}
   .tbtn{width:36px; height:36px; border-radius:var(--r); background:transparent; border:1px solid var(--line); color:var(--ink); cursor:pointer; font-size:.9rem; display:flex; align-items:center; justify-content:center; flex:none;}
@@ -180,7 +196,20 @@
   .hero h1 b{font-weight:600; color:var(--navy-2); }
   html[data-theme="dark"] .hero h1 b{color:var(--navy);}
   .hero-p{font-size:1.15rem; color:var(--ink-2); max-width:50ch; margin:22px 0 0;}
-  .tags{display:flex; flex-wrap:wrap; gap:8px; list-style:none; margin:22px 0 0; padding:0;}
+  /* what we build: boxed, amber markers */
+  .hero-ex{margin:24px 0 0; padding:15px 18px 17px; background:var(--surface); border:1px solid var(--line); border-left:3px solid var(--amber); border-radius:var(--r);}
+  .hero-ex-l{display:block; font-family:'IBM Plex Mono',monospace; font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; color:var(--amber-ink); margin-bottom:11px;}
+  /* auto-fit drops to one column whenever two would force the labels to wrap */
+  .hero-b{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:8px 20px; list-style:none; margin:0; padding:0;}
+  .hero-b li{position:relative; padding-left:16px; font-size:.89rem; color:var(--ink-2); line-height:1.45;}
+  .hero-b li::before{content:""; position:absolute; left:0; top:8px; width:6px; height:6px; background:var(--amber); border-radius:1px;}
+  .hero-b a:hover{color:var(--ink);}
+  /* who it's for: same panel treatment as the examples, pills instead of markers */
+  .hero-who{margin-top:22px; padding:15px 16px 17px; background:var(--surface); border:1px solid var(--line); border-left:3px solid var(--amber); border-radius:var(--r);}
+  .hero-who .tags{gap:7px;}
+  .hero-who .tags li a{padding:5px 11px;}
+  .hero-tags-l{display:block; margin-bottom:11px; font-family:'IBM Plex Mono',monospace; font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; color:var(--amber-ink);}
+  .tags{display:flex; flex-wrap:wrap; gap:8px; list-style:none; margin:0; padding:0;}
   .tags li a{
     display:inline-block; font-size:.83rem; color:var(--ink-2);
     border:1px solid var(--line); border-radius:100px; padding:5px 13px;
@@ -190,11 +219,15 @@
   .hero-cta{display:flex; gap:16px; align-items:center; flex-wrap:wrap; margin-top:30px;}
   .hero-sm{font-size:.9rem; color:var(--ink-2);}
 
+  /* right hero column: photo sits level with the headline, industries below it */
+  .hero-r{align-self:start; margin-top:34px;}
+  @media (max-width:960px){ .hero-r{align-self:stretch; margin-top:0;} }
+
   /* photo frame */
   .shot{position:relative; border:1px solid var(--line); border-radius:var(--r); overflow:hidden; background:var(--surface); box-shadow:var(--shadow); aspect-ratio:4/3;}
   .shot img{position:absolute; inset:0; z-index:1; width:100%; height:100%; object-fit:cover;}
   .shot-ph{position:absolute; inset:0; z-index:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; text-align:center; padding:24px; background-color:var(--paper);}
-  .shot-ph b{font-family:'IBM Plex Mono',monospace; font-size:.74rem; letter-spacing:.12em; text-transform:uppercase; color:var(--amber); font-weight:600;}
+  .shot-ph b{font-family:'IBM Plex Mono',monospace; font-size:.74rem; letter-spacing:.12em; text-transform:uppercase; color:var(--amber-ink); font-weight:600;}
   .shot-ph span{font-size:.85rem; color:var(--ink-2); max-width:34ch;}
 
   /* ---------- trust strip ---------- */
@@ -249,20 +282,38 @@
   .pick-out b{display:block; font-family:'Archivo',sans-serif; font-size:1.12rem; margin-bottom:6px;}
   .pick-out p{margin:0; color:var(--ink-2); font-size:.95rem;}
 
-  .towns{display:grid; grid-template-columns:repeat(4,1fr); gap:2px 26px; margin:0; padding:0; list-style:none;}
-  @media (max-width:820px){ .towns{grid-template-columns:repeat(2,1fr);} }
-  @media (max-width:460px){ .towns{grid-template-columns:1fr;} }
-  .towns li{font-size:.93rem; color:var(--panel-text-2); padding:5px 0 5px 17px; position:relative; break-inside:avoid;}
-  .towns li::before{content:""; position:absolute; left:0; top:13px; width:6px; height:6px; border-radius:50%; background:var(--amber-bright);}
+  /* ---------- where we work (one line inside about) ---------- */
+  .area-line{
+    margin:18px 0 0; max-width:56ch; font-size:.93rem; color:var(--ink-2);
+    padding-left:15px; border-left:2px solid var(--amber);
+  }
 
   /* ---------- sectors ---------- */
-  .sec-g{display:grid; grid-template-columns:repeat(2,1fr); gap:20px;}
+  .sec-g{display:grid; grid-template-columns:repeat(2,1fr); gap:20px; align-items:start;}
   @media (max-width:900px){ .sec-g{grid-template-columns:1fr;} }
+  .sct{padding:0;}
+  .sct summary{
+    list-style:none; cursor:pointer; display:flex; align-items:center;
+    justify-content:space-between; gap:16px; padding:22px 26px;
+  }
+  .sct summary::-webkit-details-marker{display:none;}
+  .sct summary:focus-visible{outline:2px solid var(--amber); outline-offset:-3px;}
+  .sct-x{
+    flex:none; width:31px; height:31px; border-radius:var(--r);
+    background:var(--amber-bright); color:#0A2039;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'IBM Plex Mono',monospace; font-size:1.2rem; font-weight:600; line-height:1;
+    transition:transform .2s ease, background .15s ease;
+  }
+  .sct[open] .sct-x{transform:rotate(45deg);}
+  .sct summary:hover .sct-x{background:#F2C87C;}
+  .sct-body{padding:0 26px 24px;}
   .sct h3{font-size:1.14rem;}
   .sct .sc{color:var(--ink-2); font-size:.95rem; margin:11px 0 0;}
+  .sct-body .sc{margin-top:0;}
   .sct ul{margin:16px 0 0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px;}
   .sct li{position:relative; padding-left:21px; font-size:.93rem; color:var(--ink-2);}
-  .sct li::before{content:"→"; position:absolute; left:0; color:var(--amber);}
+  .sct li::before{content:"→"; position:absolute; left:0; color:var(--amber-ink);}
   .sct .po{margin-top:16px; padding-top:13px; border-top:1px solid var(--line); font-family:'IBM Plex Mono',monospace; font-size:.8rem; color:var(--navy-2);}
   html[data-theme="dark"] .sct .po{color:var(--navy);}
 
@@ -274,15 +325,27 @@
   .no-i b{display:block; font-family:'Archivo',sans-serif; font-size:1rem; margin-bottom:3px;}
   .no-i span{color:var(--ink-2); font-size:.94rem;}
 
-  /* ---------- timeline ---------- */
-  .tl{position:relative; padding-left:34px;}
-  .tl::before{content:""; position:absolute; left:9px; top:6px; bottom:6px; width:2px; background:var(--panel-line);}
-  .tl-i{position:relative; padding-bottom:34px;}
-  .tl-i:last-child{padding-bottom:0;}
-  .tl-i::before{content:""; position:absolute; left:-30px; top:6px; width:12px; height:12px; border-radius:50%; background:var(--amber-bright); border:3px solid var(--panel);}
+  /* ---------- timeline (horizontal, 4 across) ---------- */
+  .tl{display:grid; grid-template-columns:repeat(4,1fr); gap:0 26px;}
+  .tl-i{position:relative; padding-top:31px;}
+  .tl-i::before{content:""; position:absolute; left:0; top:0; width:12px; height:12px; border-radius:50%; background:var(--amber-bright); border:3px solid var(--panel); z-index:1;}
+  .tl-i::after{content:""; position:absolute; left:18px; top:8px; width:calc(100% + 8px); height:2px; background:var(--panel-line);}
+  .tl-i:last-child::after{content:none;}
   .tl-d{font-family:'IBM Plex Mono',monospace; font-size:.73rem; letter-spacing:.1em; text-transform:uppercase; color:var(--amber-bright);}
-  .tl-i h3{font-size:1.08rem; margin-top:6px;}
-  .tl-i p{color:var(--panel-text-2); font-size:.95rem; margin:7px 0 0; max-width:58ch;}
+  .tl-i h3{font-size:1.05rem; margin-top:7px;}
+  .tl-i p{color:var(--panel-text-2); font-size:.92rem; margin:8px 0 0;}
+  @media (max-width:900px){
+    .tl{grid-template-columns:repeat(2,1fr); gap:34px 26px;}
+    .tl-i:nth-child(2n)::after{content:none;}
+  }
+  @media (max-width:560px){
+    .tl{grid-template-columns:1fr; gap:0;}
+    .tl-i{padding:0 0 28px 30px;}
+    .tl-i::before{top:4px;}
+    .tl-i::after,.tl-i:nth-child(2n)::after{content:""; left:8px; top:20px; width:2px; height:calc(100% - 16px);}
+    .tl-i:last-child{padding-bottom:0;}
+    .tl-i:last-child::after{content:none;}
+  }
 
 
   /* ---------- faq ---------- */
@@ -290,7 +353,7 @@
   .fq{border-bottom:1px solid var(--line); padding:20px 0;}
   .fq summary{cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center; gap:18px; font-family:'Archivo',sans-serif; font-weight:600; font-size:1.03rem;}
   .fq summary::-webkit-details-marker{display:none;}
-  .fq summary::after{content:"+"; font-family:'IBM Plex Mono',monospace; font-size:1.25rem; color:var(--amber); flex:none; transition:transform .2s ease;}
+  .fq summary::after{content:"+"; font-family:'IBM Plex Mono',monospace; font-size:1.25rem; color:var(--amber-ink); flex:none; transition:transform .2s ease;}
   .fq[open] summary::after{transform:rotate(45deg);}
   .fq p{margin:11px 0 0; color:var(--ink-2); font-size:.96rem; max-width:66ch;}
 
@@ -334,8 +397,52 @@
   .ft-col a,.ft-col p{display:block; font-size:.9rem; color:var(--panel-text); margin:0 0 7px; opacity:.85;}
   .ft-bot{display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; padding-top:20px; font-size:.83rem;}
 
-  .rise{opacity:0; transform:translateY(13px); transition:opacity .5s ease, transform .5s ease;}
-  .rise.on{opacity:1; transform:none;}
+  /* ---------- chat widget ---------- */
+  .cw-btn{
+    position:fixed; right:22px; bottom:22px; z-index:90;
+    display:flex; align-items:center; gap:9px;
+    background:var(--panel); color:var(--panel-text);
+    border:1px solid var(--panel-line); border-radius:100px;
+    padding:12px 19px; font-family:inherit; font-size:.92rem; font-weight:600;
+    cursor:pointer; box-shadow:var(--shadow);
+    transition:transform .15s ease;
+  }
+  .cw-btn:hover{transform:translateY(-2px);}
+  .cw-btn svg{width:17px; height:17px; flex:none;}
+  .cw-panel{
+    position:fixed; right:22px; bottom:82px; z-index:91;
+    width:355px; max-width:calc(100vw - 44px);
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--r);
+    box-shadow:var(--shadow); overflow:hidden; display:none; flex-direction:column;
+  }
+  .cw-panel.open{display:flex;}
+  .cw-head{background:var(--panel); color:var(--panel-text); padding:15px 17px; display:flex; align-items:flex-start; gap:12px;}
+  .cw-head b{font-family:'Archivo',sans-serif; font-size:1rem; display:block;}
+  .cw-head span{font-size:.79rem; color:var(--panel-text-2); display:block; margin-top:3px;}
+  .cw-x{margin-left:auto; background:none; border:none; color:var(--panel-text-2); font-size:1rem; cursor:pointer; line-height:1; padding:3px 4px; flex:none;}
+  .cw-x:hover{color:var(--panel-text);}
+  .cw-log{padding:16px; display:flex; flex-direction:column; gap:11px; max-height:300px; overflow-y:auto;}
+  .cw-m{max-width:87%; padding:10px 13px; border-radius:12px; font-size:.9rem; line-height:1.5;}
+  .cw-m.bot{background:var(--paper); border:1px solid var(--line); color:var(--ink); align-self:flex-start; border-bottom-left-radius:3px;}
+  .cw-m.you{background:var(--navy); color:#fff; align-self:flex-end; border-bottom-right-radius:3px;}
+  html[data-theme="dark"] .cw-m.you{background:var(--navy-mark);}
+  .cw-m a{color:var(--navy-2); text-decoration:underline;}
+  .cw-m.you a{color:#fff;}
+  .cw-chips{display:flex; flex-wrap:wrap; gap:7px; padding:0 16px 13px;}
+  .cw-chip{background:transparent; border:1px solid var(--line); color:var(--ink-2); border-radius:100px; padding:6px 12px; font-size:.82rem; font-family:inherit; cursor:pointer;}
+  .cw-chip:hover{border-color:var(--navy-2); color:var(--ink);}
+  .cw-form{display:flex; gap:8px; padding:12px 16px; border-top:1px solid var(--line);}
+  .cw-form input{flex:1; min-width:0; padding:10px 12px; border-radius:var(--r); border:1px solid var(--line); background:var(--paper); color:var(--ink); font-family:inherit; font-size:.9rem;}
+  .cw-form button{flex:none; background:var(--btn-bg); color:var(--btn-text); border:none; border-radius:var(--r); padding:0 15px; font-family:inherit; font-weight:600; font-size:.88rem; cursor:pointer;}
+  @media (max-width:760px){
+    .cw-btn{bottom:76px; right:16px; padding:11px 16px;}
+    .cw-panel{bottom:132px; right:16px; left:16px; width:auto; max-width:none;}
+    .cw-log{max-height:44vh;}
+  }
+
+  /* scoped to .js so the page degrades to fully visible when JS never runs */
+  .js .rise{opacity:0; transform:translateY(13px); transition:opacity .5s ease, transform .5s ease;}
+  .js .rise.on{opacity:1; transform:none;}
 </style>
 </head>
 <body>
@@ -348,6 +455,7 @@
     <button class="mbtn" id="mbtn" aria-label="Open menu" aria-expanded="false">☰</button>
     <ul class="nav" id="nav">
       <li><a href="#about">About us</a></li>
+      <li><a href="#build">What we build</a></li>
       <li><a href="#services">Services</a></li>
       <li><a href="#area">Service area</a></li>
       <li><a href="#sectors">Who we help</a></li>
@@ -365,32 +473,49 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="wrap hero-g">
-    <div>
-      <div class="anno">AI training &amp; workflow automation · San Antonio, TX</div>
-      <h1>The work eating your team's week can mostly be <b>handed to software.</b></h1>
-      <p class="hero-p">Almost every business has work that repeats the same way every week, and most of it can be handed to software. Palmsfield AI sits down with San Antonio-area businesses, maps where the hours actually go, and builds automations that give your time back. On-site, on your systems, with your people trained to run it.</p>
-      <ul class="tags">
-        <li><a href="#sectors">Home services &amp; HVAC</a></li>
-        <li><a href="#sectors">Property management &amp; real estate</a></li>
-        <li><a href="#sectors">Clinics &amp; professional offices</a></li>
-        <li><a href="#sectors">Trucking &amp; logistics</a></li>
-        <li><a href="#sectors">Retail, wholesale &amp; distribution</a></li>
-        <li><a href="#sectors">Any office on email &amp; spreadsheets</a></li>
-      </ul>
-      <div class="hero-cta">
-        <a class="btn btn--amber" href="#contact">Book a free call</a>
-        <a class="btn btn--line" href="#calc">Cost of manual work</a>
+  <div class="wrap">
+    <div class="hero-g">
+      <div>
+        <div class="anno">AI training &amp; workflow automation &middot; San Antonio, TX</div>
+        <h1>The work eating your team's week can mostly be <b>handed to software.</b></h1>
+        <p class="hero-p">Palmsfield AI sits down with San Antonio-area businesses, maps where the hours actually go, and builds automations that give your time back. On-site, on your systems, with your people trained to run it.</p>
+        <div class="hero-ex">
+          <span class="hero-ex-l">A few examples</span>
+          <ul class="hero-b">
+            <li><a href="#build">Phone answering that books jobs</a></li>
+            <li><a href="#build">English and Spanish front desk</a></li>
+            <li><a href="#build">Answers from your own documents</a></li>
+            <li><a href="#build">Paperwork keyed, no retyping</a></li>
+          </ul>
+        </div>
+        <div class="hero-cta">
+          <a class="btn btn--amber" href="#contact">Book a free call</a>
+          <a class="btn btn--line" href="#calc">Cost of manual work</a>
+        </div>
+        <p class="hero-sm">Straight answers, no sales script.</p>
       </div>
-      <p class="hero-sm">Straight answers, no sales script.</p>
-    </div>
 
-    <div class="shot rise">
-      <div class="shot-ph">
-        <b>Photo slot</b>
-        <span>Team photo</span>
+      <div class="hero-r">
+        <div class="shot rise">
+          <div class="shot-ph">
+            <b>Photo slot</b>
+            <span>Team photo</span>
+          </div>
+          <img src="images/team-at-work.jpg" width="1200" height="800" alt="Team members working together at computers during an on-site AI workshop" onerror="this.style.display='none'">
+        </div>
+
+        <div class="hero-who rise">
+          <span class="hero-tags-l">Who we do it for</span>
+          <ul class="tags">
+            <li><a href="#sectors">Home services &amp; HVAC</a></li>
+            <li><a href="#sectors">Property management</a></li>
+            <li><a href="#sectors">Clinics &amp; offices</a></li>
+            <li><a href="#sectors">Trucking &amp; logistics</a></li>
+            <li><a href="#sectors">Retail &amp; distribution</a></li>
+            <li><a href="#sectors">Agencies &amp; nonprofits</a></li>
+          </ul>
+        </div>
       </div>
-      <img src="images/team-at-work.jpg" alt="Team members working together at computers during an on-site AI workshop" onerror="this.style.display='none'">
     </div>
   </div>
 </section>
@@ -430,13 +555,75 @@
       </div>
       <div>
         <div class="res" aria-live="polite">
-          <div class="res-i"><div class="n" id="ow">25</div><div class="c">hours back per week</div></div>
-          <div class="res-i"><div class="n" id="oy">1,200</div><div class="c">hours back per year</div></div>
-          <div class="res-i"><div class="n" id="oc">$33,600</div><div class="c">annual labor value</div></div>
+          <div class="res-i"><div class="n" id="ow">24</div><div class="c">hours back per week</div></div>
+          <div class="res-i"><div class="n" id="oy">1,152</div><div class="c">hours back per year</div></div>
+          <div class="res-i"><div class="n" id="oc">$32,256</div><div class="c">annual labor value</div></div>
         </div>
         <p class="caveat">Estimate only. It assumes roughly 40% of repetitive hours are worth automating, which is deliberately conservative. Your real number depends on which systems you run and how the work is structured.</p>
         <div style="margin-top:22px"><a class="btn btn--amber" href="#contact">Talk through your numbers</a></div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT WE BUILD -->
+<section class="sec sec--alt" id="build">
+  <div class="wrap">
+    <div class="head rise">
+      <div class="anno">The four we get asked for most</div>
+      <h2>What we actually build.</h2>
+      <p>Every business is a little different, but the same four keep coming up. Each one has a number attached to it before we start, so you can tell whether it worked.</p>
+    </div>
+    <div class="svc-g">
+
+      <article class="card svc rise">
+        <h3>AI phone answering and missed call recovery</h3>
+        <div class="svc-m">Picks up 24/7 · books into your calendar</div>
+        <p>A call that rings out is usually a job somebody else got. A voice agent answers when your team cannot, handles the questions you get asked fifty times a week, and puts the appointment straight into your scheduler.</p>
+        <ul>
+          <li>Covers after hours, weekends, and the times every line is busy</li>
+          <li>Texts back within seconds on anything that still slips through</li>
+          <li>Writes up what was said and files it where you keep your leads</li>
+        </ul>
+        <div class="svc-tag">The one with the clearest before and after.</div>
+      </article>
+
+      <article class="card svc rise">
+        <h3>A front office that works in English and Spanish</h3>
+        <div class="svc-m">Both languages · calls, texts, and paperwork</div>
+        <p>Plenty of your customers would rather do business in Spanish, and plenty of crews would rather read the work order in Spanish too. Everything we build can run in both without you hiring for it.</p>
+        <ul>
+          <li>Calls and chats answered in whichever language the customer opens with</li>
+          <li>Work orders, safety notes, and procedures translated for the crew</li>
+          <li>Quotes and follow-ups written in the language the customer prefers</li>
+        </ul>
+        <div class="svc-tag">Hard to find locally. Easy for us to include.</div>
+      </article>
+
+      <article class="card svc rise">
+        <h3>An assistant that answers from your own documents</h3>
+        <div class="svc-m">Your manuals, contracts, and price book</div>
+        <p>Every office has one person who knows where everything is, and everyone else interrupts them. This gets the rest of the team the same answer without walking over to that desk.</p>
+        <ul>
+          <li>Equipment manuals, warranty terms, and whatever the price is this month</li>
+          <li>Leases, vendor agreements, and owner contracts</li>
+          <li>Every answer points back at the page it came from, so it can be checked</li>
+        </ul>
+        <div class="svc-tag">Stops your best person being a search engine.</div>
+      </article>
+
+      <article class="card svc rise">
+        <h3>Paperwork into your software without the retyping</h3>
+        <div class="svc-m">Invoices, work orders, intake forms</div>
+        <p>The job nobody wants: reading a document and typing what it says into a different screen. A photo or a PDF goes in and clean fields come out the other side.</p>
+        <ul>
+          <li>Invoices, bills of lading, purchase orders, and permits keyed automatically</li>
+          <li>A photo of an equipment nameplate pulls the model, serial, and warranty status</li>
+          <li>A voice memo from the truck comes back as a written estimate</li>
+        </ul>
+        <div class="svc-tag">Usually the easiest one to prove in a week.</div>
+      </article>
+
     </div>
   </div>
 </section>
@@ -527,35 +714,6 @@
   </div>
 </section>
 
-<!-- SERVICE AREA -->
-<section class="sec sec--navy" id="area">
-  <div class="wrap">
-    <div class="head">
-      <div class="anno">Where we work</div>
-      <h2>San Antonio, and everything within about an hour of it.</h2>
-      <p>On-site visits are included at no extra travel charge anywhere on this list.</p>
-    </div>
-    <ul class="towns">
-      <li>San Antonio &amp; all of Bexar County</li>
-      <li>New Braunfels</li>
-      <li>Boerne</li>
-      <li>Schertz</li>
-      <li>Cibolo</li>
-      <li>Seguin</li>
-      <li>Converse</li>
-      <li>Universal City</li>
-      <li>Live Oak</li>
-      <li>Selma</li>
-      <li>Helotes</li>
-      <li>Bulverde</li>
-      <li>Castroville</li>
-      <li>Floresville</li>
-      <li>Pleasanton</li>
-      <li>Fair Oaks Ranch</li>
-    </ul>
-  </div>
-</section>
-
 <!-- SECTORS -->
 <section class="sec" id="sectors">
   <div class="wrap">
@@ -565,85 +723,80 @@
       <p>The examples below are just the ones we get asked about most. The underlying pattern (manual boring repetitive work) shows up in nearly every business we walk into.</p>
     </div>
     <div class="sec-g">
-      <article class="card sct rise">
-        <h3>Home services &amp; HVAC</h3>
-        <p class="sc"> Quote requests, dispatch changes, a truck stuck on 1604 — all handled by hand, all at once.</p>
-        <ul>
-          <li>Quote requests logged and answered within the hour</li>
-          <li>Dispatch updates pushed to crews automatically</li>
-          <li>Review requests sent after every completed job</li>
-        </ul>
-        <p class="po">Typically 10–15 admin hours back per week</p>
-      </article>
-      <article class="card sct rise">
-        <h3>Property management &amp; real estate</h3>
-        <p class="sc">Maintenance tickets sorted by hand, vendors chased over email, owner statements pulled out of three separate logins.</p>
-        <ul>
-          <li>Tickets routed to the right vendor on arrival</li>
-          <li>Vendor confirmations tracked without follow-up emails</li>
-          <li>Owner reports built weekly from software you already use</li>
-        </ul>
-        <p class="po">Typically 10–15 admin hours back per week</p>
-      </article>
-      <article class="card sct rise">
-        <h3>Clinics &amp; professional offices</h3>
-        <p class="sc">Intake forms retyped into the system, referrals tracked on paper, and someone spending Friday afternoon on reminder calls.</p>
-        <ul>
-          <li>Intake details moved into your system without retyping</li>
-          <li>Reminders and confirmations sent automatically</li>
-          <li>Referral and follow-up status visible in one place</li>
-        </ul>
-        <p class="po">Front-desk hours returned to patient-facing work</p>
-      </article>
-      <article class="card sct rise">
-        <h3>Trucking &amp; logistics</h3>
-        <p class="sc">The same load details typed three times — once into the TMS, once into a customer email, once into accounting.</p>
-        <ul>
-          <li>Document details pulled out and pushed into your TMS</li>
-          <li>Customer updates triggered by the system, not a person</li>
-          <li>Accounting entries synced without a second keystroke</li>
-        </ul>
-        <p class="po">Typically 15–20 hours cut across a small ops team</p>
-      </article>
-      <article class="card sct rise">
-        <h3>Retail, wholesale &amp; distribution</h3>
-        <p class="sc">Orders arrive by email, phone, and portal, then get keyed into inventory by hand. Stock questions get answered by someone walking to a shelf.</p>
-        <ul>
-          <li>Orders captured from any channel into one place</li>
-          <li>Reorder alerts before something runs out</li>
-          <li>Customer questions answered from live stock data</li>
-        </ul>
-        <p class="po">Fewer keying errors and faster order turnaround</p>
-      </article>
-      <article class="card sct rise">
-        <h3>Any office running on email and spreadsheets</h3>
-        <p class="sc">Agencies, nonprofits, insurance offices, contractors, schools. If the same file gets updated by four people and the same email gets written every Monday, this applies to you.</p>
-        <ul>
-          <li>Recurring emails and reports drafted automatically</li>
-          <li>Spreadsheet updates pulled straight from the source</li>
-          <li>Approvals and handoffs tracked without chasing</li>
-        </ul>
-        <p class="po">Usually the fastest place to find early wins</p>
-      </article>
+      <details class="card sct rise">
+        <summary><h3>Home services &amp; HVAC</h3><span class="sct-x" aria-hidden="true">+</span></summary>
+        <div class="sct-body">
+          <p class="sc">Quote requests, dispatch changes, a truck stuck on 1604, all handled by hand and all at once.</p>
+          <ul>
+            <li>Quote requests logged and answered within the hour</li>
+            <li>Dispatch updates pushed to crews automatically</li>
+            <li>Review requests sent after every completed job</li>
+          </ul>
+          <p class="po">Typically 10–15 admin hours back per week</p>
+        </div>
+      </details>
+      <details class="card sct rise">
+        <summary><h3>Property management &amp; real estate</h3><span class="sct-x" aria-hidden="true">+</span></summary>
+        <div class="sct-body">
+          <p class="sc">Maintenance tickets sorted by hand, vendors chased over email, owner statements pulled out of three separate logins.</p>
+          <ul>
+            <li>Tickets routed to the right vendor on arrival</li>
+            <li>Vendor confirmations tracked without follow-up emails</li>
+            <li>Owner reports built weekly from software you already use</li>
+          </ul>
+          <p class="po">Typically 10–15 admin hours back per week</p>
+        </div>
+      </details>
+      <details class="card sct rise">
+        <summary><h3>Clinics &amp; professional offices</h3><span class="sct-x" aria-hidden="true">+</span></summary>
+        <div class="sct-body">
+          <p class="sc">Intake forms retyped into the system, referrals tracked on paper, and someone spending Friday afternoon on reminder calls.</p>
+          <ul>
+            <li>Intake details moved into your system without retyping</li>
+            <li>Reminders and confirmations sent automatically</li>
+            <li>Referral and follow-up status visible in one place</li>
+          </ul>
+          <p class="po">Front-desk hours returned to patient-facing work</p>
+        </div>
+      </details>
+      <details class="card sct rise">
+        <summary><h3>Trucking &amp; logistics</h3><span class="sct-x" aria-hidden="true">+</span></summary>
+        <div class="sct-body">
+          <p class="sc">The same load details typed three times. Once into the TMS, once into a customer email, once into accounting.</p>
+          <ul>
+            <li>Document details pulled out and pushed into your TMS</li>
+            <li>Customer updates triggered by the system, not a person</li>
+            <li>Accounting entries synced without a second keystroke</li>
+          </ul>
+          <p class="po">Typically 15–20 hours cut across a small ops team</p>
+        </div>
+      </details>
+      <details class="card sct rise">
+        <summary><h3>Retail, wholesale &amp; distribution</h3><span class="sct-x" aria-hidden="true">+</span></summary>
+        <div class="sct-body">
+          <p class="sc">Orders arrive by email, phone, and portal, then get keyed into inventory by hand. Stock questions get answered by someone walking to a shelf.</p>
+          <ul>
+            <li>Orders captured from any channel into one place</li>
+            <li>Reorder alerts before something runs out</li>
+            <li>Customer questions answered from live stock data</li>
+          </ul>
+          <p class="po">Fewer keying errors and faster order turnaround</p>
+        </div>
+      </details>
+      <details class="card sct rise">
+        <summary><h3>Any office running on email and spreadsheets</h3><span class="sct-x" aria-hidden="true">+</span></summary>
+        <div class="sct-body">
+          <p class="sc">Agencies, nonprofits, insurance offices, contractors, schools. If the same file gets updated by four people and the same email gets written every Monday, this applies to you.</p>
+          <ul>
+            <li>Recurring emails and reports drafted automatically</li>
+            <li>Spreadsheet updates pulled straight from the source</li>
+            <li>Approvals and handoffs tracked without chasing</li>
+          </ul>
+          <p class="po">Usually the fastest place to find early wins</p>
+        </div>
+      </details>
     </div>
     <p style="margin-top:26px; color:var(--ink-2); font-size:.96rem; max-width:64ch;" class="rise">Whatever you do, the question is the same: what work is manual, boring and repetitive? Book a free call and we'll tell you how we can help!</p>
-  </div>
-</section>
-
-<!-- WHAT WE DON'T DO -->
-<section class="sec sec--alt">
-  <div class="wrap">
-    <div class="head rise">
-      <div class="anno">Setting expectations</div>
-      <h2>What we don't do.</h2>
-      <p>Worth saying out loud, because a few of these are what people expect from consultants.</p>
-    </div>
-    <div class="no-g rise">
-      <div class="no-i"><span class="no-x">✕</span><span><b>We don't resell software</b>We take no commissions or referral fees from any vendor. If the right answer is a tool you already pay for, that's what we'll tell you.</span></div>
-      <div class="no-i"><span class="no-x">✕</span><span><b>We don't replace your staff</b>Every automation is handed to a named person who understands it. The goal is fewer wasted hours, not fewer people.</span></div>
-      <div class="no-i"><span class="no-x">✕</span><span><b>We don't run long discovery phases</b>No six-month engagement before anything works. If we can't show something useful inside a few weeks, the scope was wrong.</span></div>
-      <div class="no-i"><span class="no-x">✕</span><span><b>We don't take work we can't measure</b>If we can't agree on what "better" looks like in hours or dollars up front, we'll say no.</span></div>
-    </div>
   </div>
 </section>
 
@@ -695,14 +848,31 @@
   </div>
 </section>
 
-<!-- ABOUT -->
+<!-- WHAT WE DON'T DO -->
+<section class="sec sec--alt">
+  <div class="wrap">
+    <div class="head rise">
+      <div class="anno">Setting expectations</div>
+      <h2>What we don't do.</h2>
+      <p>Worth saying out loud, because a few of these are what people expect from consultants.</p>
+    </div>
+    <div class="no-g rise">
+      <div class="no-i"><span class="no-x">✕</span><span><b>We don't resell software</b>We take no commissions or referral fees from any vendor. If the right answer is a tool you already pay for, that's what we'll tell you.</span></div>
+      <div class="no-i"><span class="no-x">✕</span><span><b>We don't replace your staff</b>Every automation is handed to a named person who understands it. The goal is fewer wasted hours, not fewer people.</span></div>
+      <div class="no-i"><span class="no-x">✕</span><span><b>We don't run long discovery phases</b>No six-month engagement before anything works. If we can't show something useful inside a few weeks, the scope was wrong.</span></div>
+      <div class="no-i"><span class="no-x">✕</span><span><b>We don't take work we can't measure</b>If we can't agree on what "better" looks like in hours or dollars up front, we'll say no.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT + WHERE WE WORK -->
 <section class="sec" id="about">
   <div class="wrap hero-g">
     <div class="rise">
       <div class="anno">About</div>
       <h2 style="font-size:clamp(1.6rem,3vw,2.2rem)">Local, and staying that way.</h2>
-      <p style="color:var(--ink-2); margin:18px 0 0; max-width:52ch;">Palmsfield AI works with San Antonio-area businesses on one thing: making AI genuinely useful inside the work your team already does every day.</p>
-      <p style="color:var(--ink-2); margin:14px 0 0; max-width:52ch;">We keep the client list short on purpose. Showing up in person, working through the messy parts of a real workflow, and staying reachable after the handover is what that makes any of this stick.</p>
+      <p class="area-line" id="area">San Antonio and all of Bexar County, plus New Braunfels, Boerne, Schertz, Cibolo, Seguin, Converse, Universal City, Live Oak, Selma, Helotes, Bulverde, Castroville, Floresville, Pleasanton and Fair Oaks Ranch. On-site visits anywhere on that list carry no travel charge.</p>
+      <p style="color:var(--ink-2); margin:16px 0 0; max-width:52ch;">We keep the client list short on purpose. Showing up in person, working through the messy parts of a real workflow, and staying reachable after the handover is what makes any of this stick.</p>
       <p style="font-family:'Archivo',sans-serif; font-size:1.16rem; margin:22px 0 0; max-width:46ch;">We're not here to sell you software. We're here to get your people out of the office earlier.</p>
     </div>
     <div class="shot rise">
@@ -710,7 +880,7 @@
         <b>Photo slot</b>
         <span>photo.</span>
       </div>
-      <img src="images/about-onsite.jpg" alt="Consultant working alongside staff at a San Antonio business" onerror="this.style.display='none'">
+      <img src="images/about-onsite.jpg" width="1200" height="800" loading="lazy" decoding="async" alt="Consultant working alongside staff at a San Antonio business" onerror="this.style.display='none'">
     </div>
   </div>
 </section>
@@ -789,8 +959,9 @@
       </div>
       <div class="ft-c">
         <div class="ft-col"><h4>Contact</h4><a href="mailto:hello@palmsfieldai.com" style="color:var(--amber-bright); opacity:1;">hello@palmsfieldai.com</a><a href="#contact">Book a free call</a></div>
-        <div class="ft-col"><h4>Explore</h4><a href="#services">Services</a><a href="#area">Service area</a><a href="#sectors">Who we help</a><a href="#faq">FAQ</a></div>
-        <div class="ft-col"><h4>Elsewhere</h4><a href="#" target="_blank" rel="noopener">LinkedIn</a></div>
+        <div class="ft-col"><h4>Explore</h4><a href="#build">What we build</a><a href="#services">Services</a><a href="#area">Service area</a><a href="#sectors">Who we help</a><a href="#faq">FAQ</a></div>
+        <!-- Elsewhere column removed: the LinkedIn link was href="#" (dead). Restore with the real profile URL:
+             <div class="ft-col"><h4>Elsewhere</h4><a href="https://www.linkedin.com/company/YOUR-PAGE" target="_blank" rel="noopener">LinkedIn</a></div> -->
       </div>
     </div>
     <div class="ft-bot"><span>© 2026 Palmsfield AI. All rights reserved.</span><span>San Antonio, Texas</span></div>
@@ -802,13 +973,64 @@
   <a class="btn btn--sm btn--amber" href="#contact">Book a free call</a>
 </div>
 
+<!-- CHAT WIDGET
+     Answers below are pre-written and matched on keywords. It is not a language model.
+     Do not relabel it as an AI assistant unless you wire it to a real backend first.
+     To upgrade: keep the markup, and change the reply() function to POST the question
+     to a Netlify Function that holds your API key. Never put an API key in this file. -->
+<button class="cw-btn" id="cwBtn" type="button" aria-expanded="false" aria-controls="cwPanel">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.9 8.9 0 0 1-4-.9L3 21l1.9-4.9a8.9 8.9 0 0 1-.9-4 8.4 8.4 0 0 1 8.4-9 8.4 8.4 0 0 1 8.6 8.4z"/></svg>
+  Questions?
+</button>
+
+<div class="cw-panel" id="cwPanel" role="dialog" aria-label="Quick questions">
+  <div class="cw-head">
+    <div>
+      <b>Quick questions</b>
+      <span>Short pre-written answers. Anything else goes to a person.</span>
+    </div>
+    <button class="cw-x" id="cwX" type="button" aria-label="Close">&#10005;</button>
+  </div>
+  <div class="cw-log" id="cwLog" role="log" aria-live="polite"></div>
+  <div class="cw-chips">
+    <button class="cw-chip" type="button">What does it cost?</button>
+    <button class="cw-chip" type="button">The phone agent</button>
+    <button class="cw-chip" type="button">Do you cover my town?</button>
+    <button class="cw-chip" type="button">Is my data safe?</button>
+  </div>
+  <form class="cw-form" id="cwForm">
+    <label class="hp" for="cwIn">Your question</label>
+    <input id="cwIn" type="text" placeholder="Type a question" autocomplete="off">
+    <button type="submit">Send</button>
+  </form>
+</div>
+
 <script>
 (function(){
+  // Each feature is isolated: one failure can no longer stop the ones after it.
+  function safe(name,fn){ try{ fn(); }catch(e){ if(window.console&&console.error) console.error('[pfai] '+name+' failed:',e); } }
+
+  // reveal — runs first so page content is never left hidden by a later error
+  safe('reveal',function(){
+    var r=document.querySelectorAll('.rise');
+    if('IntersectionObserver' in window){
+      var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); } }); },{threshold:.1});
+      r.forEach(function(el){ io.observe(el); });
+    } else { r.forEach(function(el){ el.classList.add('on'); }); }
+    // safety net: if anything above is still unrevealed after 3s, show it
+    setTimeout(function(){ document.querySelectorAll('.rise:not(.on)').forEach(function(el){
+      if(el.getBoundingClientRect().top < window.innerHeight) el.classList.add('on'); }); },3000);
+  });
+
+  safe('menu',function(){
   // menu
   var mb=document.getElementById('mbtn'), nv=document.getElementById('nav');
   mb.addEventListener('click',function(){ var o=nv.classList.toggle('open'); mb.setAttribute('aria-expanded',o); });
   nv.querySelectorAll('a').forEach(function(a){ a.addEventListener('click',function(){ nv.classList.remove('open'); mb.setAttribute('aria-expanded','false'); }); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&nv.classList.contains('open')){ nv.classList.remove('open'); mb.setAttribute('aria-expanded','false'); mb.focus(); } });
+  });
 
+  safe('theme',function(){
   // theme
   var tb=document.getElementById('tbtn');
   function paint(t){ tb.textContent = t==='dark'?'\u2600':'\u263E'; tb.setAttribute('aria-pressed',t==='dark'); tb.setAttribute('aria-label', t==='dark'?'Switch to light mode':'Switch to dark mode'); }
@@ -819,7 +1041,9 @@
     try{localStorage.setItem('pfai-theme',n);}catch(e){}
     paint(n);
   });
+  });
 
+  safe('calculator',function(){
   // calculator
   var SHARE=0.4, WEEKS=48;
   var P=document.getElementById('people'),H=document.getElementById('hours'),R=document.getElementById('rate');
@@ -828,14 +1052,18 @@
   function calc(){
     var p=+P.value,h=+H.value,r=+R.value;
     pv.textContent=p; hv.textContent=h; rv.textContent='$'+r;
-    var per=Math.round(h*SHARE), wk=per*p, yr=wk*WEEKS, cash=yr*r;
-    ow.textContent=wk.toLocaleString('en-US');
-    oy.textContent=yr.toLocaleString('en-US');
-    oc.textContent='$'+cash.toLocaleString('en-US');
+    // round once on the team total, not per person: rounding each person's share first
+    // sent small-but-real inputs (25 people x 1h) to a misleading zero.
+    var wkRaw=h*SHARE*p;
+    ow.textContent=Math.round(wkRaw).toLocaleString('en-US');
+    oy.textContent=Math.round(wkRaw*WEEKS).toLocaleString('en-US');
+    oc.textContent='$'+Math.round(wkRaw*WEEKS*r).toLocaleString('en-US');
   }
   [P,H,R].forEach(function(el){ el.addEventListener('input',calc); });
   calc();
+  });
 
+  safe('picker',function(){
   // picker
   var answers={}, out=document.getElementById('pickOut');
   var MAP={
@@ -844,27 +1072,83 @@
     build:{t:'Start with an Automation Build',d:'You already know the repetitive work. We build three to five automations against your live data in four to six weeks.'},
     support:{t:'Start with Monthly Support',d:'If things you set up keep breaking, the fix is someone maintaining them. We can take that over month to month.'}
   };
+  // Both answers count. Broken systems (support) are the urgent thing and win outright;
+  // otherwise we start at the EARLIER of the two stages, because that is where the gap is.
+  var STAGE={review:1, workshop:2, build:3};
+  function decide(a1,a2){
+    if(!a1) return a2;
+    if(!a2) return a1;
+    if(a2==='support') return 'support';
+    return STAGE[a1]<=STAGE[a2] ? a1 : a2;
+  }
   document.querySelectorAll('.opts').forEach(function(grp){
     grp.querySelectorAll('.opt').forEach(function(btn){
       btn.addEventListener('click',function(){
         grp.querySelectorAll('.opt').forEach(function(b){ b.setAttribute('aria-pressed','false'); });
         btn.setAttribute('aria-pressed','true');
         answers[grp.dataset.q]=btn.dataset.v;
-        var keys=Object.keys(answers);
-        var pick = answers['2'] || answers['1'];
-        if(keys.length===2 && answers['1']==='build' && answers['2']==='review'){ pick='review'; }
-        var m=MAP[pick];
+        var m=MAP[decide(answers['1'],answers['2'])];
         out.innerHTML='<b>'+m.t+'</b><p>'+m.d+'</p>';
       });
     });
   });
+  });
 
-  // reveal
-  var r=document.querySelectorAll('.rise');
-  if('IntersectionObserver' in window){
-    var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); } }); },{threshold:.1});
-    r.forEach(function(el){ io.observe(el); });
-  } else { r.forEach(function(el){ el.classList.add('on'); }); }
+  safe('chat',function(){
+  // chat: pre-written answers matched on keywords, first match wins
+  var cwBtn=document.getElementById('cwBtn');
+  if(cwBtn){
+    var cwPanel=document.getElementById('cwPanel'),cwLog=document.getElementById('cwLog'),
+        cwForm=document.getElementById('cwForm'),cwIn=document.getElementById('cwIn'),
+        cwX=document.getElementById('cwX'),greeted=false;
+    var KB=[
+      {k:['cost','price','pricing','how much','fee','charge','budget','expensive','afford'],
+       a:'The workflow review is a flat rate. Builds get quoted once we have seen the work, because scope moves around a lot between businesses. We talk real numbers on the first call. <a href="#contact">Book one here</a>.'},
+      {k:['phone','voice','receptionist','miss','answering','ring','after hours','voicemail'],
+       a:'That is the one we get asked about most. The agent answers after hours and when every line is busy, books the job, and texts back anyone who still slips through. <a href="#build">More on it here</a>.'},
+      {k:['spanish','bilingual','language','espanol','español','translate'],
+       a:'Yes. Calls, texts, and chat run in English or Spanish depending on what the customer opens with, and we translate work orders and safety notes for crews too. <a href="#build">More here</a>.'},
+      {k:['town','area','city','near','location','travel','san antonio','bexar','drive','local'],
+       a:'Bexar County and the towns around it, with no travel charge. <a href="#area">Full list here</a>. Farther out we take on case by case, usually one on-site day plus remote follow-up.'},
+      {k:['chatbot','chat bot',' bot ','widget'],
+       a:'Yes, we build these for customer sites. This one is a simple scripted version. The ones we build for clients answer from your actual pricing, hours, and service list.'},
+      {k:['what do you','automate','automation','build','offer','service','help with','can you do'],
+       a:'Four things mostly: phone answering and missed call recovery, a bilingual front office, an assistant that answers from your own documents, and pulling paperwork into your software without retyping. <a href="#build">Details here</a>.'},
+      {k:['how long','how fast','timeline','how quick','when can','weeks','turnaround'],
+       a:'The review gets you a written plan within a day. A first automation is usually running inside a few weeks, depending on how your systems are set up.'},
+      {k:['data','secure','security','privacy','safe','hipaa','confidential','nda'],
+       a:'We sign an NDA before touching anything sensitive, work under accounts you own and can revoke, and hand you a written note of what each automation reads and where it sends it.'},
+      {k:['software','integrate','tool','crm','quickbooks','connect','system'],
+       a:'Whatever you already run. Scheduling software, CRM, spreadsheets, email, accounting. We would rather fit your setup than ask you to replace it.'},
+      {k:['break','broken','support','maintain','fix'],
+       a:'Everything comes with 60 days of support and documentation, plus a trained owner on your staff. Monthly support after that is optional and cancels any month.'},
+      {k:['replace','fire','layoff','laid off','cut staff','lose their job'],
+       a:'Not what we are for. Every automation gets handed to a named person on your team. The point is fewer wasted hours, not fewer people.'},
+      {k:['book','appointment','schedule','contact','email','get in touch','talk to','speak to','human'],
+       a:'Easiest is the <a href="#contact">form at the bottom of the page</a>, or email <a href="mailto:hello@palmsfieldai.com">hello@palmsfieldai.com</a> and a person will get back to you.'}
+    ];
+    var FALLBACK='That one is outside what I have written down here. Put it on the <a href="#contact">contact form</a> or email <a href="mailto:hello@palmsfieldai.com">hello@palmsfieldai.com</a> and you will get a proper answer from a person.';
+
+    function push(cls,node){ var d=document.createElement('div'); d.className='cw-m '+cls; d[cls==='you'?'textContent':'innerHTML']=node; cwLog.appendChild(d); cwLog.scrollTop=cwLog.scrollHeight; }
+    function reply(q){
+      var s=' '+q.toLowerCase()+' ';
+      for(var i=0;i<KB.length;i++){ for(var j=0;j<KB[i].k.length;j++){ if(s.indexOf(KB[i].k[j])>-1){ return KB[i].a; } } }
+      return FALLBACK;
+    }
+    function ask(q){ push('you',q); setTimeout(function(){ push('bot',reply(q)); },260); }
+    function cwOpen(){
+      cwPanel.classList.add('open'); cwBtn.setAttribute('aria-expanded','true');
+      if(!greeted){ greeted=true; push('bot','Hey. I can answer the usual questions about pricing, coverage, and what we build. Pick one below or type your own.'); }
+      cwIn.focus();
+    }
+    function cwClose(){ cwPanel.classList.remove('open'); cwBtn.setAttribute('aria-expanded','false'); cwBtn.focus(); }
+    cwBtn.addEventListener('click',function(){ cwPanel.classList.contains('open')?cwClose():cwOpen(); });
+    cwX.addEventListener('click',cwClose);
+    document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&cwPanel.classList.contains('open')){ cwClose(); } });
+    cwForm.addEventListener('submit',function(e){ e.preventDefault(); var v=cwIn.value.trim(); if(!v){return;} cwIn.value=''; ask(v); });
+    cwPanel.querySelectorAll('.cw-chip').forEach(function(c){ c.addEventListener('click',function(){ ask(c.textContent); }); });
+  }
+  });
 })();
 </script>
 
